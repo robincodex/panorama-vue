@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "outDir": "dist",
+        "sourceMap": false,
+        "target": "es2017",
+        "useDefineForClassFields": false,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "allowJs": false,
+        "strict": true,
+        "noUnusedLocals": true,
+        "experimentalDecorators": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "removeComments": false,
+        "jsx": "preserve",
+        "lib": ["ES2017"],
+        "types": ["@moddota/panorama-types"],
+        "rootDir": "."
+    },
+    "include": ["src"]
+}
