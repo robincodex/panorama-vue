@@ -1,10 +1,6 @@
 import { RendererOptions } from '@vue/runtime-core';
+import { isModelListener, isOn } from '@vue/shared';
 import { patchStyle } from './style';
-
-const onRE = /^on[^a-z]/;
-export const isOn = (key: string) => onRE.test(key);
-
-export const isModelListener = (key: string) => key.startsWith('onUpdate:');
 
 export const patchProp: RendererOptions<Panel, Panel>['patchProp'] = function (
     el,

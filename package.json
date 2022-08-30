@@ -1,10 +1,21 @@
 {
-  "name": "panorama-vue",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "dependencies": {
-    "@moddota/panorama-types": "^1.21.0",
-    "@vue/runtime-core": "^3.2.37"
-  }
+    "name": "panorama-vue",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "watch": "rollup -c -w",
+        "build": "rollup -c"
+    },
+    "dependencies": {
+        "@moddota/panorama-types": "^1.21.0",
+        "@rollup/plugin-commonjs": "22.0.2",
+        "@rollup/plugin-node-resolve": "13.3.0",
+        "@rollup/plugin-typescript": "8.4.0",
+        "@vue/runtime-core": "^3.2.38",
+        "@vue/shared": "^3.2.38",
+        "rollup": "2.78.1",
+        "tslib": "^2.4.0",
+        "typescript": "4.8.2"
+    }
 }
