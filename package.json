@@ -1,11 +1,12 @@
 {
     "name": "panorama-vue",
-    "version": "1.0.0",
+    "version": "0.0.0",
     "main": "index.js",
     "license": "MIT",
     "scripts": {
         "watch": "rollup -c -w",
-        "build": "rollup -c"
+        "build": "rollup -c",
+        "lint:prettier": "prettier --check ."
     },
     "dependencies": {
         "@moddota/panorama-types": "^1.21.0",
@@ -14,6 +15,7 @@
         "@rollup/plugin-typescript": "8.4.0",
         "@vue/runtime-core": "^3.2.38",
         "@vue/shared": "^3.2.38",
+        "prettier": "^2.7.1",
         "rollup": "2.78.1",
         "tslib": "^2.4.0",
         "typescript": "4.8.2"

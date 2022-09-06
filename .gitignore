@@ -1,4 +1,4 @@
-dist
+dist/vue.js
 .DS_Store
 node_modules
 coverage

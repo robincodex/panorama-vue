@@ -1,0 +1,10 @@
+{
+    "name": "panorama-vue",
+    "version": "0.0.1",
+    "main": "./vue.js",
+    "license": "MIT",
+    "dependencies": {
+        "@moddota/panorama-types": "^1.21.0",
+        "@vue/runtime-core": "^3.2.38"
+    }
+}
