@@ -1,8 +1,19 @@
 {
     "name": "panorama-vue",
     "version": "0.0.0",
+    "description": "Vue for Valve's Panorama UI (for Dota 2 Custom Games).",
+    "engines": {
+        "node": ">=16.0.0"
+    },
+    "engineStrict": true,
     "main": "index.js",
     "license": "MIT",
+    "author": "RobinCode",
+    "homepage": "https://github.com/RobinCodeX/panorama-vue",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/RobinCodeX/panorama-vue.git"
+    },
     "scripts": {
         "watch": "rollup -c -w",
         "build": "rollup -c",
