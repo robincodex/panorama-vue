@@ -55,7 +55,7 @@ const { render, createApp } = createRenderer<Panel, Panel>({
         return $(selector);
     },
     setScopeId(el, id): void {
-        el.SetAttributeString(id, '');
+        el.AddClass(id);
     }
 });
 
