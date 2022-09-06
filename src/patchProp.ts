@@ -68,7 +68,11 @@ export function patchEvent(
     event: string,
     nextValue: Function | null
 ) {
-    event = event.toLowerCase();
+    if (event === 'onClick') {
+        event = 'onactivate';
+    } else {
+        event = event.toLowerCase();
+    }
     if (nextValue) {
         el.SetPanelEvent(event as PanelEvent, nextValue as () => void);
     } else {
