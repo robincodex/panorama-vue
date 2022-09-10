@@ -17,7 +17,8 @@
     "scripts": {
         "watch": "rollup -c -w",
         "build": "rollup -c",
-        "lint:prettier": "prettier --check ."
+        "lint:prettier": "prettier --check .",
+        "write-prettier": "prettier --write ."
     },
     "dependencies": {
         "@moddota/panorama-types": "^1.21.0",
