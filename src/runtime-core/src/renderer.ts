@@ -308,7 +308,7 @@ function baseCreateRenderer(options: RendererOptions): any {
         patchProp: hostPatchProp,
         createElement: hostCreateElement,
         createText: hostCreateText,
-        createComment: hostCreateComment,
+        // createComment: hostCreateComment,
         setText: hostSetText,
         setElementText: hostSetElementText,
         parentNode: hostParentNode,
@@ -461,16 +461,17 @@ function baseCreateRenderer(options: RendererOptions): any {
         container,
         anchor
     ) => {
-        if (n1 == null) {
-            hostInsert(
-                (n2.el = hostCreateComment((n2.children as string) || '')),
-                container,
-                anchor
-            );
-        } else {
-            // there's no support for dynamic comments
-            n2.el = n1.el;
-        }
+        // No support comments
+        // if (n1 == null) {
+        //     hostInsert(
+        //         (n2.el = hostCreateComment((n2.children as string) || '')),
+        //         container,
+        //         anchor
+        //     );
+        // } else {
+        //     // there's no support for dynamic comments
+        //     n2.el = n1.el;
+        // }
     };
 
     const mountStaticNode = (
