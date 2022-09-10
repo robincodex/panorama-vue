@@ -16,8 +16,7 @@ import { Directive, validateDirectiveName } from './directives';
 import { RootRenderFunction } from './renderer';
 import { InjectionKey } from './apiInject';
 import { warn } from './warning';
-import { createVNode, cloneVNode, VNode } from './vnode';
-import { RootHydrateFunction } from './hydration';
+import { createVNode, cloneVNode } from './vnode';
 import { isFunction, NO, isObject } from '@vue/shared';
 import { version } from '.';
 import { installAppCompatProperties } from './compat/global';
@@ -174,8 +173,7 @@ export type CreateAppFunction<HostElement> = (
 let uid = 0;
 
 export function createAppAPI<HostElement>(
-    render: RootRenderFunction<HostElement>,
-    hydrate?: RootHydrateFunction
+    render: RootRenderFunction<HostElement>
 ): CreateAppFunction<HostElement> {
     return function createApp(rootComponent, rootProps = null) {
         if (!isFunction(rootComponent)) {
@@ -314,14 +312,7 @@ export function createAppAPI<HostElement>(
                         };
                     }
 
-                    if (isHydrate && hydrate) {
-                        hydrate(
-                            vnode as VNode<Panel, Panel>,
-                            rootContainer as any
-                        );
-                    } else {
-                        render(vnode, rootContainer, isSVG);
-                    }
+                    render(vnode, rootContainer, isSVG);
                     isMounted = true;
                     app._container = rootContainer;
                     // for devtools and telemetry

@@ -61,7 +61,6 @@ import {
 } from './components/Suspense';
 import { TeleportImpl, TeleportVNode } from './components/Teleport';
 import { isKeepAlive, KeepAliveContext } from './components/KeepAlive';
-import { registerHMR, unregisterHMR, isHmrUpdating } from './hmr';
 import { invokeDirectiveHook } from './directives';
 import { initFeatureFlags } from './featureFlags';
 import { isAsyncWrapper } from './apiAsyncComponent';
@@ -330,7 +329,7 @@ function baseCreateRenderer(options: RendererOptions): any {
         parentSuspense = null,
         isSVG = false,
         slotScopeIds = null,
-        optimized = __DEV__ && isHmrUpdating ? false : !!n2.dynamicChildren
+        optimized = !!n2.dynamicChildren
     ) => {
         if (n1 === n2) {
             return;
@@ -806,13 +805,6 @@ function baseCreateRenderer(options: RendererOptions): any {
         }
         parentComponent && toggleRecurse(parentComponent, true);
 
-        if (__DEV__ && isHmrUpdating) {
-            // HMR updated, force full diff
-            patchFlag = 0;
-            optimized = false;
-            dynamicChildren = null;
-        }
-
         const areChildrenSVG = isSVG && n2.type !== 'foreignObject';
         if (dynamicChildren) {
             patchBlockChildren(
@@ -1059,17 +1051,6 @@ function baseCreateRenderer(options: RendererOptions): any {
             slotScopeIds: fragmentSlotScopeIds
         } = n2;
 
-        if (
-            __DEV__ &&
-            // #5523 dev root fragment may inherit directives
-            (isHmrUpdating || patchFlag & PatchFlags.DEV_ROOT_FRAGMENT)
-        ) {
-            // HMR updated / Dev root fragment (w/ comments), force full diff
-            patchFlag = 0;
-            optimized = false;
-            dynamicChildren = null;
-        }
-
         // check if this is a slot fragment with :slotted scope ids
         if (fragmentSlotScopeIds) {
             slotScopeIds = slotScopeIds
@@ -1206,10 +1187,6 @@ function baseCreateRenderer(options: RendererOptions): any {
                 parentComponent,
                 parentSuspense
             ));
-
-        if (__DEV__ && instance.type.__hmrId) {
-            registerHMR(instance);
-        }
 
         if (__DEV__) {
             pushWarningContext(initialVNode);
@@ -2213,10 +2190,6 @@ function baseCreateRenderer(options: RendererOptions): any {
         parentSuspense: SuspenseBoundary | null,
         doRemove?: boolean
     ) => {
-        if (__DEV__ && instance.type.__hmrId) {
-            unregisterHMR(instance);
-        }
-
         const { bum, scope, update, subTree, um } = instance;
 
         // beforeUnmount hook

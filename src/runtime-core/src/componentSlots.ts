@@ -18,7 +18,6 @@ import {
 import { warn } from './warning';
 import { isKeepAlive } from './components/KeepAlive';
 import { ContextualRenderFn, withCtx } from './componentRenderContext';
-import { isHmrUpdating } from './hmr';
 import { DeprecationTypes, isCompatEnabled } from './compat/compatConfig';
 import { toRaw } from '../../reactivity/src/index';
 
@@ -172,12 +171,7 @@ export const updateSlots = (
     if (vnode.shapeFlag & ShapeFlags.SLOTS_CHILDREN) {
         const type = (children as RawSlots)._;
         if (type) {
-            // compiled slots.
-            if (__DEV__ && isHmrUpdating) {
-                // Parent was HMR updated so slot content may have changed.
-                // force update slots and mark instance for hmr as well
-                extend(slots, children as Slots);
-            } else if (optimized && type === SlotFlags.STABLE) {
+            if (optimized && type === SlotFlags.STABLE) {
                 // compiled AND stable.
                 // no need to update, and skip stale slots removal.
                 needDeletionCheck = false;

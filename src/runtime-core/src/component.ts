@@ -28,11 +28,7 @@ import {
 } from './componentProps';
 import { Slots, initSlots, InternalSlots } from './componentSlots';
 import { warn } from './warning';
-import {
-    ErrorCodes,
-    callWithErrorHandling,
-    handleError
-} from './errorHandling';
+import { ErrorCodes, callWithErrorHandling } from './errorHandling';
 import { AppContext, createAppContext, AppConfig } from './apiCreateApp';
 import { Directive, validateDirectiveName } from './directives';
 import {

@@ -485,105 +485,107 @@ function installCompatMount(
                 __DEV__ && warn(`Root instance is already mounted.`);
                 return;
             }
+            throw new Error('Not support $mount');
 
-            let container: Panel;
-            if (typeof selectorOrEl === 'string') {
-                // eslint-disable-next-line
-                const result = $(selectorOrEl);
-                if (!result) {
-                    __DEV__ &&
-                        warn(
-                            `Failed to mount root instance: selector "${selectorOrEl}" returned null.`
-                        );
-                    return;
-                }
-                container = result;
-            } else {
-                // eslint-disable-next-line
-                container =
-                    selectorOrEl ||
-                    $.CreatePanel('Panel', $.GetContextPanel(), '');
-            }
+            // let container: Panel;
+            // if (typeof selectorOrEl === 'string') {
+            //     // eslint-disable-next-line
+            //     const result = $(selectorOrEl);
+            //     if (!result) {
+            //         __DEV__ &&
+            //             warn(
+            //                 `Failed to mount root instance: selector "${selectorOrEl}" returned null.`
+            //             );
+            //         return;
+            //     }
+            //     container = result;
+            // } else {
+            //     // eslint-disable-next-line
+            //     container =
+            //         selectorOrEl ||
+            //         $.CreatePanel('Panel', $.GetContextPanel(), '');
+            // }
 
-            // resolve in-DOM template if component did not provide render
-            // and no setup/mixin render functions are provided (by checking
-            // that the instance is still using the placeholder render fn)
-            if (hasNoRender && instance.render === emptyRender) {
-                // root directives check
-                if (__DEV__) {
-                    for (let i = 0; i < container.attributes.length; i++) {
-                        const attr = container.attributes[i];
-                        if (
-                            attr.name !== 'v-cloak' &&
-                            /^(v-|:|@)/.test(attr.name)
-                        ) {
-                            warnDeprecation(
-                                DeprecationTypes.GLOBAL_MOUNT_CONTAINER,
-                                null
-                            );
-                            break;
-                        }
-                    }
-                }
-                instance.render = null;
-                (component as ComponentOptions).template = container.innerHTML;
-                finishComponentSetup(instance, false, true /* skip options */);
-            }
+            // // resolve in-DOM template if component did not provide render
+            // // and no setup/mixin render functions are provided (by checking
+            // // that the instance is still using the placeholder render fn)
+            // if (hasNoRender && instance.render === emptyRender) {
+            //     // root directives check
+            //     if (__DEV__) {
+            //         for (let i = 0; i < container.attributes.length; i++) {
+            //             const attr = container.attributes[i];
+            //             if (
+            //                 attr.name !== 'v-cloak' &&
+            //                 /^(v-|:|@)/.test(attr.name)
+            //             ) {
+            //                 warnDeprecation(
+            //                     DeprecationTypes.GLOBAL_MOUNT_CONTAINER,
+            //                     null
+            //                 );
+            //                 break;
+            //             }
+            //         }
+            //     }
+            //     instance.render = null;
+            //     (component as ComponentOptions).template = container.innerHTML;
+            //     finishComponentSetup(instance, false, true /* skip options */);
+            // }
 
-            // clear content before mounting
-            container.innerHTML = '';
+            // // clear content before mounting
+            // container.innerHTML = '';
 
-            // TODO hydration
-            render(vnode, container);
+            // // TODO hydration
+            // render(vnode, container);
 
-            if (container instanceof Element) {
-                container.removeAttribute('v-cloak');
-                container.setAttribute('data-v-app', '');
-            }
+            // if (container instanceof Element) {
+            //     container.removeAttribute('v-cloak');
+            //     container.setAttribute('data-v-app', '');
+            // }
 
-            isMounted = true;
-            app._container = container;
-            // for devtools and telemetry
-            (container as any).__vue_app__ = app;
+            // isMounted = true;
+            // app._container = container;
+            // // for devtools and telemetry
+            // (container as any).__vue_app__ = app;
 
-            return instance.proxy!;
+            // return instance.proxy!;
         };
 
         instance.ctx._compat_destroy = () => {
-            if (isMounted) {
-                render(null, app._container);
-                delete app._container.__vue_app__;
-            } else {
-                const { bum, scope, um } = instance;
-                // beforeDestroy hooks
-                if (bum) {
-                    invokeArrayFns(bum);
-                }
-                if (
-                    isCompatEnabled(
-                        DeprecationTypes.INSTANCE_EVENT_HOOKS,
-                        instance
-                    )
-                ) {
-                    instance.emit('hook:beforeDestroy');
-                }
-                // stop effects
-                if (scope) {
-                    scope.stop();
-                }
-                // unmounted hook
-                if (um) {
-                    invokeArrayFns(um);
-                }
-                if (
-                    isCompatEnabled(
-                        DeprecationTypes.INSTANCE_EVENT_HOOKS,
-                        instance
-                    )
-                ) {
-                    instance.emit('hook:destroyed');
-                }
-            }
+            throw new Error('Not support $destroy');
+            // if (isMounted) {
+            //     render(null, app._container);
+            //     delete app._container.__vue_app__;
+            // } else {
+            //     const { bum, scope, um } = instance;
+            //     // beforeDestroy hooks
+            //     if (bum) {
+            //         invokeArrayFns(bum);
+            //     }
+            //     if (
+            //         isCompatEnabled(
+            //             DeprecationTypes.INSTANCE_EVENT_HOOKS,
+            //             instance
+            //         )
+            //     ) {
+            //         instance.emit('hook:beforeDestroy');
+            //     }
+            //     // stop effects
+            //     if (scope) {
+            //         scope.stop();
+            //     }
+            //     // unmounted hook
+            //     if (um) {
+            //         invokeArrayFns(um);
+            //     }
+            //     if (
+            //         isCompatEnabled(
+            //             DeprecationTypes.INSTANCE_EVENT_HOOKS,
+            //             instance
+            //         )
+            //     ) {
+            //         instance.emit('hook:destroyed');
+            //     }
+            // }
         };
 
         return instance.proxy!;

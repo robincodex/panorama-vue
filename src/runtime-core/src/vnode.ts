@@ -15,7 +15,6 @@ import {
 import {
     ComponentInternalInstance,
     Data,
-    ConcreteComponent,
     ClassComponent,
     Component,
     isClassComponent
@@ -44,7 +43,6 @@ import {
 } from './componentRenderContext';
 import { RendererNode, RendererElement } from './renderer';
 import { NULL_DYNAMIC_COMPONENT } from './helpers/resolveAssets';
-import { hmrDirtyComponents } from './hmr';
 import { convertLegacyComponent } from './compat/component';
 import { convertLegacyVModelProps } from './compat/componentVModel';
 import { defineLegacyVNodeProperties } from './compat/renderFn';
@@ -350,14 +348,6 @@ export function isVNode(value: any): value is VNode {
 }
 
 export function isSameVNodeType(n1: VNode, n2: VNode): boolean {
-    if (
-        __DEV__ &&
-        n2.shapeFlag & ShapeFlags.COMPONENT &&
-        hmrDirtyComponents.has(n2.type as ConcreteComponent)
-    ) {
-        // HMR only: if the component has been hot-updated, force a reload.
-        return false;
-    }
     return n1.type === n2.type && n1.key === n2.key;
 }
 
