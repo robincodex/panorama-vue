@@ -10,11 +10,11 @@ import {
     VNodeArrayChildren,
     openBlock,
     createBlock,
-    Fragment
+    Fragment,
+    createVNode
 } from '../vnode';
 import { PatchFlags, SlotFlags } from '@vue/shared';
 import { warn } from '../warning';
-import { createVNode } from '@vue/runtime-core';
 import { isAsyncWrapper } from '../apiAsyncComponent';
 
 /**

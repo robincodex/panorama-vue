@@ -12,11 +12,10 @@ import {
     NOOP,
     isArray,
     isObject,
-    isString,
-    invokeArrayFns
+    isString
 } from '@vue/shared';
 import { warn } from '../warning';
-import { cloneVNode, createVNode } from '../vnode';
+import { createVNode } from '../vnode';
 import { RootRenderFunction } from '../renderer';
 import {
     App,
@@ -29,7 +28,6 @@ import {
     Component,
     ComponentOptions,
     createComponentInstance,
-    finishComponentSetup,
     isRuntimeOnly,
     setupComponent
 } from '../component';
@@ -41,7 +39,6 @@ import {
 import { ComponentPublicInstance } from '../componentPublicInstance';
 import { Directive } from '../directives';
 import { nextTick } from '../scheduler';
-import { version } from '..';
 import {
     installLegacyConfigWarnings,
     installLegacyOptionMergeStrats,

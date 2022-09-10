@@ -1,23 +1,26 @@
-import { ComponentPropsOptions } from '@vue/runtime-core'
-import { isArray, isPromise, isFunction } from '@vue/shared'
+import { isArray, isPromise, isFunction } from '@vue/shared';
 import {
-  getCurrentInstance,
-  setCurrentInstance,
-  SetupContext,
-  createSetupContext,
-  unsetCurrentInstance
-} from './component'
-import { EmitFn, EmitsOptions } from './componentEmits'
-import { ComponentObjectPropsOptions, ExtractPropTypes } from './componentProps'
-import { warn } from './warning'
+    getCurrentInstance,
+    setCurrentInstance,
+    SetupContext,
+    createSetupContext,
+    unsetCurrentInstance
+} from './component';
+import { EmitFn, EmitsOptions } from './componentEmits';
+import {
+    ComponentObjectPropsOptions,
+    ComponentPropsOptions,
+    ExtractPropTypes
+} from './componentProps';
+import { warn } from './warning';
 
 // dev only
 const warnRuntimeUsage = (method: string) =>
-  warn(
-    `${method}() is a compiler-hint helper that is only usable inside ` +
-      `<script setup> of a single file component. Its arguments should be ` +
-      `compiled away and passing it at runtime has no effect.`
-  )
+    warn(
+        `${method}() is a compiler-hint helper that is only usable inside ` +
+            `<script setup> of a single file component. Its arguments should be ` +
+            `compiled away and passing it at runtime has no effect.`
+    );
 
 /**
  * Vue `<script setup>` compiler macro for declaring component props. The
@@ -51,20 +54,20 @@ const warnRuntimeUsage = (method: string) =>
  */
 // overload 1: runtime props w/ array
 export function defineProps<PropNames extends string = string>(
-  props: PropNames[]
-): Readonly<{ [key in PropNames]?: any }>
+    props: PropNames[]
+): Readonly<{ [key in PropNames]?: any }>;
 // overload 2: runtime props w/ object
 export function defineProps<
-  PP extends ComponentObjectPropsOptions = ComponentObjectPropsOptions
->(props: PP): Readonly<ExtractPropTypes<PP>>
+    PP extends ComponentObjectPropsOptions = ComponentObjectPropsOptions
+>(props: PP): Readonly<ExtractPropTypes<PP>>;
 // overload 3: typed-based declaration
-export function defineProps<TypeProps>(): Readonly<TypeProps>
+export function defineProps<TypeProps>(): Readonly<TypeProps>;
 // implementation
 export function defineProps() {
-  if (__DEV__) {
-    warnRuntimeUsage(`defineProps`)
-  }
-  return null as any
+    if (__DEV__) {
+        warnRuntimeUsage(`defineProps`);
+    }
+    return null as any;
 }
 
 /**
@@ -92,18 +95,18 @@ export function defineProps() {
  */
 // overload 1: runtime emits w/ array
 export function defineEmits<EE extends string = string>(
-  emitOptions: EE[]
-): EmitFn<EE[]>
+    emitOptions: EE[]
+): EmitFn<EE[]>;
 export function defineEmits<E extends EmitsOptions = EmitsOptions>(
-  emitOptions: E
-): EmitFn<E>
-export function defineEmits<TypeEmit>(): TypeEmit
+    emitOptions: E
+): EmitFn<E>;
+export function defineEmits<TypeEmit>(): TypeEmit;
 // implementation
 export function defineEmits() {
-  if (__DEV__) {
-    warnRuntimeUsage(`defineEmits`)
-  }
-  return null as any
+    if (__DEV__) {
+        warnRuntimeUsage(`defineEmits`);
+    }
+    return null as any;
 }
 
 /**
@@ -119,32 +122,32 @@ export function defineEmits() {
  * output and should **not** be actually called at runtime.
  */
 export function defineExpose<
-  Exposed extends Record<string, any> = Record<string, any>
+    Exposed extends Record<string, any> = Record<string, any>
 >(exposed?: Exposed) {
-  if (__DEV__) {
-    warnRuntimeUsage(`defineExpose`)
-  }
+    if (__DEV__) {
+        warnRuntimeUsage(`defineExpose`);
+    }
 }
 
-type NotUndefined<T> = T extends undefined ? never : T
+type NotUndefined<T> = T extends undefined ? never : T;
 
 type InferDefaults<T> = {
-  [K in keyof T]?: InferDefault<T, NotUndefined<T[K]>>
-}
+    [K in keyof T]?: InferDefault<T, NotUndefined<T[K]>>;
+};
 
 type InferDefault<P, T> = T extends
-  | null
-  | number
-  | string
-  | boolean
-  | symbol
-  | Function
-  ? T | ((props: P) => T)
-  : (props: P) => T
+    | null
+    | number
+    | string
+    | boolean
+    | symbol
+    | Function
+    ? T | ((props: P) => T)
+    : (props: P) => T;
 
 type PropsWithDefaults<Base, Defaults> = Base & {
-  [K in keyof Defaults]: K extends keyof Base ? NotUndefined<Base[K]> : never
-}
+    [K in keyof Defaults]: K extends keyof Base ? NotUndefined<Base[K]> : never;
+};
 
 /**
  * Vue `<script setup>` compiler macro for providing props default values when
@@ -165,29 +168,29 @@ type PropsWithDefaults<Base, Defaults> = Base & {
  * and should **not** be actually called at runtime.
  */
 export function withDefaults<Props, Defaults extends InferDefaults<Props>>(
-  props: Props,
-  defaults: Defaults
+    props: Props,
+    defaults: Defaults
 ): PropsWithDefaults<Props, Defaults> {
-  if (__DEV__) {
-    warnRuntimeUsage(`withDefaults`)
-  }
-  return null as any
+    if (__DEV__) {
+        warnRuntimeUsage(`withDefaults`);
+    }
+    return null as any;
 }
 
 export function useSlots(): SetupContext['slots'] {
-  return getContext().slots
+    return getContext().slots;
 }
 
 export function useAttrs(): SetupContext['attrs'] {
-  return getContext().attrs
+    return getContext().attrs;
 }
 
 function getContext(): SetupContext {
-  const i = getCurrentInstance()!
-  if (__DEV__ && !i) {
-    warn(`useContext() called without active instance.`)
-  }
-  return i.setupContext || (i.setupContext = createSetupContext(i))
+    const i = getCurrentInstance()!;
+    if (__DEV__ && !i) {
+        warn(`useContext() called without active instance.`);
+    }
+    return i.setupContext || (i.setupContext = createSetupContext(i));
 }
 
 /**
@@ -196,30 +199,32 @@ function getContext(): SetupContext {
  * @internal
  */
 export function mergeDefaults(
-  raw: ComponentPropsOptions,
-  defaults: Record<string, any>
+    raw: ComponentPropsOptions,
+    defaults: Record<string, any>
 ): ComponentObjectPropsOptions {
-  const props = isArray(raw)
-    ? raw.reduce(
-        (normalized, p) => ((normalized[p] = {}), normalized),
-        {} as ComponentObjectPropsOptions
-      )
-    : raw
-  for (const key in defaults) {
-    const opt = props[key]
-    if (opt) {
-      if (isArray(opt) || isFunction(opt)) {
-        props[key] = { type: opt, default: defaults[key] }
-      } else {
-        opt.default = defaults[key]
-      }
-    } else if (opt === null) {
-      props[key] = { default: defaults[key] }
-    } else if (__DEV__) {
-      warn(`props default key "${key}" has no corresponding declaration.`)
+    const props = isArray(raw)
+        ? raw.reduce(
+              (normalized, p) => ((normalized[p] = {}), normalized),
+              {} as ComponentObjectPropsOptions
+          )
+        : raw;
+    for (const key in defaults) {
+        const opt = props[key];
+        if (opt) {
+            if (isArray(opt) || isFunction(opt)) {
+                props[key] = { type: opt, default: defaults[key] };
+            } else {
+                opt.default = defaults[key];
+            }
+        } else if (opt === null) {
+            props[key] = { default: defaults[key] };
+        } else if (__DEV__) {
+            warn(
+                `props default key "${key}" has no corresponding declaration.`
+            );
+        }
     }
-  }
-  return props
+    return props;
 }
 
 /**
@@ -228,19 +233,19 @@ export function mergeDefaults(
  * @internal
  */
 export function createPropsRestProxy(
-  props: any,
-  excludedKeys: string[]
+    props: any,
+    excludedKeys: string[]
 ): Record<string, any> {
-  const ret: Record<string, any> = {}
-  for (const key in props) {
-    if (!excludedKeys.includes(key)) {
-      Object.defineProperty(ret, key, {
-        enumerable: true,
-        get: () => props[key]
-      })
+    const ret: Record<string, any> = {};
+    for (const key in props) {
+        if (!excludedKeys.includes(key)) {
+            Object.defineProperty(ret, key, {
+                enumerable: true,
+                get: () => props[key]
+            });
+        }
     }
-  }
-  return ret
+    return ret;
 }
 
 /**
@@ -262,20 +267,20 @@ export function createPropsRestProxy(
  * @internal
  */
 export function withAsyncContext(getAwaitable: () => any) {
-  const ctx = getCurrentInstance()!
-  if (__DEV__ && !ctx) {
-    warn(
-      `withAsyncContext called without active current instance. ` +
-        `This is likely a bug.`
-    )
-  }
-  let awaitable = getAwaitable()
-  unsetCurrentInstance()
-  if (isPromise(awaitable)) {
-    awaitable = awaitable.catch(e => {
-      setCurrentInstance(ctx)
-      throw e
-    })
-  }
-  return [awaitable, () => setCurrentInstance(ctx)]
+    const ctx = getCurrentInstance()!;
+    if (__DEV__ && !ctx) {
+        warn(
+            `withAsyncContext called without active current instance. ` +
+                `This is likely a bug.`
+        );
+    }
+    let awaitable = getAwaitable();
+    unsetCurrentInstance();
+    if (isPromise(awaitable)) {
+        awaitable = awaitable.catch(e => {
+            setCurrentInstance(ctx);
+            throw e;
+        });
+    }
+    return [awaitable, () => setCurrentInstance(ctx)];
 }

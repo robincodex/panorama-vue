@@ -1,4 +1,4 @@
-import { RendererOptions } from '@vue/runtime-core';
+import { RendererOptions } from './runtime-core/src/index';
 import { isModelListener, isOn } from '@vue/shared';
 import { patchStyle } from './style';
 
@@ -12,7 +12,7 @@ export const patchProp: RendererOptions<Panel, Panel>['patchProp'] = function (
     parentComponent,
     parentSuspense,
     unmountChildren
-) {
+): void {
     if (key === 'class') {
         patchClass(el, prevValue, nextValue);
     } else if (key === 'style') {
