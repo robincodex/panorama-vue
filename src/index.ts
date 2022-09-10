@@ -1,4 +1,4 @@
-import { createRenderer } from '@vue/runtime-core';
+import { createRenderer } from './runtime-core/src/index';
 import { patchProp } from './patchProp';
 
 const { render, createApp } = createRenderer<Panel, Panel>({
