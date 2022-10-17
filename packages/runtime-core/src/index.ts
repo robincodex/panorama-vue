@@ -296,3 +296,6 @@ export {
 
 // For test-utils
 export { transformVNodeArgs } from './vnode';
+
+/** 由于PUI不需要支持SSR，所以清理了一些函数，清理后导致SFC编译有错误，所以补上这些空函数 */
+export function createHydrationRenderer() {}
