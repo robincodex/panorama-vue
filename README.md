@@ -15,3 +15,4 @@ Vue 项目编译范例: [panorama-vue-example](https://github.com/RobinCodeX/pan
 
 -   适配已经快完成，截图如下，不过这是我强行修改编译后的代码才成功的，SFC 的编译有点问题，还需研究。
     ![](./.github/images/screenshot1.png)
+-   适配完成了，范例已经可以在游戏内正常运行，不过重载时渲染有问题，后面可以着手渲染部分。
