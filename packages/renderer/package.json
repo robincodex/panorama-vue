@@ -1,0 +1,23 @@
+{
+    "name": "@panorama-vue/renderer",
+    "version": "0.0.1",
+    "description": "Vue Custom Renderer for Valve's Panorama UI (for Dota 2 Custom Games).",
+    "engines": {
+        "node": ">=16.0.0"
+    },
+    "engineStrict": true,
+    "main": "index.js",
+    "license": "MIT",
+    "author": "RobinCode",
+    "homepage": "https://github.com/RobinCodeX/panorama-vue",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/RobinCodeX/panorama-vue.git"
+    },
+    "dependencies": {
+        "@moddota/panorama-types": "^1.21.0",
+        "@panorama-vue/reactivity": "^0.0.1",
+        "@panorama-vue/runtime-core": "^0.0.1",
+        "@vue/shared": "^3.2.38"
+    }
+}

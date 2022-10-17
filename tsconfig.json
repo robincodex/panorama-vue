@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
         "baseUrl": ".",
-        "outDir": "dist",
         "sourceMap": false,
         "target": "es2017",
         "useDefineForClassFields": false,
@@ -17,7 +16,11 @@
         "jsx": "preserve",
         "lib": ["ES2017"],
         "types": ["@moddota/panorama-types"],
-        "rootDir": "."
+        "rootDir": ".",
+        "paths": {
+            "@panorama-vue/runtime-core": ["packages/runtime-core/src"],
+            "@panorama-vue/reactivity": ["packages/reactivity/src"]
+        }
     },
-    "include": ["src"]
+    "include": ["packages"]
 }
