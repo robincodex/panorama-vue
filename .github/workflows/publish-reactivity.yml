@@ -1,4 +1,4 @@
-name: Publish
+name: Publish @panorama-vue/reactivity
 on: workflow_dispatch
 jobs:
   build:
