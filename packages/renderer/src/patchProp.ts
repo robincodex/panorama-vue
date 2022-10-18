@@ -13,6 +13,9 @@ export const patchProp: RendererOptions<Panel, Panel>['patchProp'] = function (
     parentSuspense,
     unmountChildren
 ): void {
+    if (!el.IsValid()) {
+        return;
+    }
     if (key === 'class') {
         patchClass(el, prevValue, nextValue);
     } else if (key === 'style') {
