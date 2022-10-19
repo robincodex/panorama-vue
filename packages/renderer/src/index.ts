@@ -17,11 +17,12 @@ const { render, createApp } = createRenderer<Panel, Panel>({
     },
     createElement(type, _, __, vnodeProps) {
         if (vnodeProps) {
+            const { id, ref, ref_key, ref_for, style, ...props } = vnodeProps;
             const el = $.CreatePanelWithProperties(
                 type,
                 $.GetContextPanel(),
-                '',
-                vnodeProps
+                id,
+                props
             );
             return el;
         } else {
