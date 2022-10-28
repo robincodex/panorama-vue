@@ -16,8 +16,7 @@
     },
     "dependencies": {
         "@moddota/panorama-types": "^1.21.0",
-        "@panorama-vue/reactivity": "^0.0.1",
-        "@panorama-vue/runtime-core": "^0.0.2",
+        "@vue/runtime-core": "^3.2.38",
         "@vue/shared": "^3.2.38"
     }
 }

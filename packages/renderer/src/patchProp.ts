@@ -1,4 +1,4 @@
-import { RendererOptions } from '@panorama-vue/runtime-core';
+import { RendererOptions } from '@vue/runtime-core';
 import { isModelListener, isOn } from '@vue/shared';
 import { patchStyle } from './style';
 

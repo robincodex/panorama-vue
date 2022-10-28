@@ -1,4 +1,4 @@
-import { createRenderer } from '@panorama-vue/runtime-core';
+import { createRenderer } from '@vue/runtime-core';
 import { patchProp } from './patchProp';
 
 const { render, createApp } = createRenderer<Panel, Panel>({
