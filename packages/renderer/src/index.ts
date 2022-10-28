@@ -86,4 +86,4 @@ const { render, createApp } = createRenderer<Panel, Panel>({
 export { render, createApp };
 
 // 重新导出 Vue 的核心 API
-export * from '../../runtime-core/src/index';
+export * from '@vue/runtime-core';
