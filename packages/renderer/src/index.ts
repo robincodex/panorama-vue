@@ -32,7 +32,11 @@ const { render, createApp } = createRenderer<Panel, Panel>({
     },
     createText(text) {
         const label = $.CreatePanel('Label', $.GetContextPanel(), '');
-        label.text = text;
+        if (text[0] === '#') {
+            label.text = $.Localize(text);
+        } else {
+            label.text = text;
+        }
         return label;
     },
     createComment(text) {
