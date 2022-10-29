@@ -21,7 +21,7 @@ const { render, createApp } = createRenderer<Panel, Panel>({
             const el = $.CreatePanelWithProperties(
                 type,
                 $.GetContextPanel(),
-                id,
+                id || '',
                 props
             );
             return el;
