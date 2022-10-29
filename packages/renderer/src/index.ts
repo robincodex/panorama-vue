@@ -4,13 +4,13 @@ import { patchProp } from './patchProp';
 const { render, createApp } = createRenderer<Panel, Panel>({
     patchProp,
     insert(el, parent): void {
-        if (!el.IsValid() || !parent.IsValid()) {
+        if (!el || !parent || !el.IsValid() || !parent.IsValid()) {
             return;
         }
         el.SetParent(parent);
     },
     remove(el): void {
-        if (!el.IsValid()) {
+        if (!el || !el.IsValid()) {
             return;
         }
         el.DeleteAsync(0);
@@ -39,7 +39,7 @@ const { render, createApp } = createRenderer<Panel, Panel>({
         throw new Error('Not support comment');
     },
     setText(node, text): void {
-        if (!node.IsValid()) {
+        if (!node || !node.IsValid()) {
             return;
         }
         if (node.paneltype === 'Label') {
@@ -47,7 +47,7 @@ const { render, createApp } = createRenderer<Panel, Panel>({
         }
     },
     setElementText(node, text): void {
-        if (!node.IsValid()) {
+        if (!node || !node.IsValid()) {
             return;
         }
         if (node.paneltype === 'Label') {
@@ -55,13 +55,13 @@ const { render, createApp } = createRenderer<Panel, Panel>({
         }
     },
     parentNode(node) {
-        if (!node.IsValid()) {
+        if (!node || !node.IsValid()) {
             return null;
         }
         return node.GetParent();
     },
     nextSibling(node) {
-        if (!node.IsValid()) {
+        if (!node || !node.IsValid()) {
             return null;
         }
         const parent = node.GetParent();
@@ -74,7 +74,7 @@ const { render, createApp } = createRenderer<Panel, Panel>({
         return $(selector);
     },
     setScopeId(el, id): void {
-        if (!el.IsValid()) {
+        if (!el || !el.IsValid()) {
             return;
         }
         el.AddClass(id);
