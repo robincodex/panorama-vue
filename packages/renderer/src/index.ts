@@ -1,4 +1,4 @@
-import { createRenderer } from '@vue/runtime-core';
+import { App, Component, createRenderer } from '@vue/runtime-core';
 import { patchProp } from './patchProp';
 
 const { render, createApp } = createRenderer<Panel, Panel>({
@@ -81,9 +81,36 @@ const { render, createApp } = createRenderer<Panel, Panel>({
     }
 });
 
+declare global {
+    interface Panel {
+        __vue_app__?: App<Panel>;
+    }
+}
+
+/**
+ * 渲染到PUI的Panel，如果重载了会进行unmount操作，然后删除掉rootPanel下所有的元素，全部重新渲染一遍。
+ */
+function renderPanel(
+    rootPanel: Panel,
+    rootComponent: Component,
+    onCreatedApp?: (app: App<Panel>) => void
+) {
+    if (rootPanel.__vue_app__) {
+        rootPanel.__vue_app__.unmount();
+        rootPanel.RemoveAndDeleteChildren();
+        delete rootPanel.__vue_app__;
+    }
+    const app = createApp(rootComponent);
+    if (onCreatedApp) {
+        onCreatedApp(app);
+    }
+    app.mount(rootPanel);
+    return app;
+}
+
 // `render` 是底层 API
 // `createApp` 返回一个应用实例
-export { render, createApp };
+export { render, createApp, renderPanel };
 
 // 重新导出 Vue 的核心 API
 export * from '@vue/runtime-core';
