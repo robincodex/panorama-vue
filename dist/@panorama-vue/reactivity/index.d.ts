@@ -6,9 +6,15 @@ declare type Builtin = Primitive | Function | Date | Error | RegExp;
 
 declare type CollectionTypes = IterableCollections | WeakCollections;
 
-export declare function computed<T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions): ComputedRef<T>;
+export declare function computed<T>(
+    getter: ComputedGetter<T>,
+    debugOptions?: DebuggerOptions
+): ComputedRef<T>;
 
-export declare function computed<T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions): WritableComputedRef<T>;
+export declare function computed<T>(
+    options: WritableComputedOptions<T>,
+    debugOptions?: DebuggerOptions
+): WritableComputedRef<T>;
 
 export declare type ComputedGetter<T> = (...args: any[]) => T;
 
@@ -26,7 +32,12 @@ declare class ComputedRefImpl<T> {
     readonly [ReactiveFlags.IS_READONLY]: boolean;
     _dirty: boolean;
     _cacheable: boolean;
-    constructor(getter: ComputedGetter<T>, _setter: ComputedSetter<T>, isReadonly: boolean, isSSR: boolean);
+    constructor(
+        getter: ComputedGetter<T>,
+        _setter: ComputedSetter<T>,
+        isReadonly: boolean,
+        isSSR: boolean
+    );
     get value(): T;
     set value(newValue: T);
 }
@@ -37,7 +48,10 @@ export declare type ComputedSetter<T> = (v: T) => void;
 
 export declare function customRef<T>(factory: CustomRefFactory<T>): Ref<T>;
 
-export declare type CustomRefFactory<T> = (track: () => void, trigger: () => void) => {
+export declare type CustomRefFactory<T> = (
+    track: () => void,
+    trigger: () => void
+) => {
     get: () => T;
     set: (value: T) => void;
 };
@@ -60,15 +74,38 @@ export declare interface DebuggerOptions {
     onTrigger?: (event: DebuggerEvent) => void;
 }
 
-export declare type DeepReadonly<T> = T extends Builtin ? T : T extends Map<infer K, infer V> ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>> : T extends ReadonlyMap<infer K, infer V> ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>> : T extends WeakMap<infer K, infer V> ? WeakMap<DeepReadonly<K>, DeepReadonly<V>> : T extends Set<infer U> ? ReadonlySet<DeepReadonly<U>> : T extends ReadonlySet<infer U> ? ReadonlySet<DeepReadonly<U>> : T extends WeakSet<infer U> ? WeakSet<DeepReadonly<U>> : T extends Promise<infer U> ? Promise<DeepReadonly<U>> : T extends Ref<infer U> ? Readonly<Ref<DeepReadonly<U>>> : T extends {} ? {
-    readonly [K in keyof T]: DeepReadonly<T[K]>;
-} : Readonly<T>;
+export declare type DeepReadonly<T> = T extends Builtin
+    ? T
+    : T extends Map<infer K, infer V>
+    ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>>
+    : T extends ReadonlyMap<infer K, infer V>
+    ? ReadonlyMap<DeepReadonly<K>, DeepReadonly<V>>
+    : T extends WeakMap<infer K, infer V>
+    ? WeakMap<DeepReadonly<K>, DeepReadonly<V>>
+    : T extends Set<infer U>
+    ? ReadonlySet<DeepReadonly<U>>
+    : T extends ReadonlySet<infer U>
+    ? ReadonlySet<DeepReadonly<U>>
+    : T extends WeakSet<infer U>
+    ? WeakSet<DeepReadonly<U>>
+    : T extends Promise<infer U>
+    ? Promise<DeepReadonly<U>>
+    : T extends Ref<infer U>
+    ? Readonly<Ref<DeepReadonly<U>>>
+    : T extends {}
+    ? {
+          readonly [K in keyof T]: DeepReadonly<T[K]>;
+      }
+    : Readonly<T>;
 
 export declare function deferredComputed<T>(getter: () => T): ComputedRef<T>;
 
 declare type Dep = Set<ReactiveEffect> & TrackedMarkers;
 
-export declare function effect<T = any>(fn: () => T, options?: ReactiveEffectOptions): ReactiveEffectRunner;
+export declare function effect<T = any>(
+    fn: () => T,
+    options?: ReactiveEffectOptions
+): ReactiveEffectRunner;
 
 export declare type EffectScheduler = (...args: any[]) => any;
 
@@ -106,7 +143,9 @@ declare type IterableCollections = Map<any, any> | Set<any>;
 
 export declare const ITERATE_KEY: unique symbol;
 
-export declare function markRaw<T extends object>(value: T): T & {
+export declare function markRaw<T extends object>(
+    value: T
+): T & {
     [RawSymbol]?: true;
 };
 
@@ -114,9 +153,18 @@ export declare function onScopeDispose(fn: () => void): void;
 
 export declare function pauseTracking(): void;
 
-declare type Primitive = string | number | boolean | bigint | symbol | undefined | null;
+declare type Primitive =
+    | string
+    | number
+    | boolean
+    | bigint
+    | symbol
+    | undefined
+    | null;
 
-export declare function proxyRefs<T extends object>(objectWithRefs: T): ShallowUnwrapRef<T>;
+export declare function proxyRefs<T extends object>(
+    objectWithRefs: T
+): ShallowUnwrapRef<T>;
 
 declare const RawSymbol: unique symbol;
 
@@ -142,7 +190,9 @@ declare const RawSymbol: unique symbol;
  * count.value // -> 1
  * ```
  */
-export declare function reactive<T extends object>(target: T): UnwrapNestedRefs<T>;
+export declare function reactive<T extends object>(
+    target: T
+): UnwrapNestedRefs<T>;
 
 export declare class ReactiveEffect<T = any> {
     fn: () => T;
@@ -156,7 +206,11 @@ export declare class ReactiveEffect<T = any> {
     onStop?: () => void;
     onTrack?: (event: DebuggerEvent) => void;
     onTrigger?: (event: DebuggerEvent) => void;
-    constructor(fn: () => T, scheduler?: EffectScheduler | null, scope?: EffectScope);
+    constructor(
+        fn: () => T,
+        scheduler?: EffectScheduler | null,
+        scope?: EffectScope
+    );
     run(): T | undefined;
     stop(): void;
 }
@@ -175,18 +229,20 @@ export declare interface ReactiveEffectRunner<T = any> {
 }
 
 export declare const enum ReactiveFlags {
-    SKIP = "__v_skip",
-    IS_REACTIVE = "__v_isReactive",
-    IS_READONLY = "__v_isReadonly",
-    IS_SHALLOW = "__v_isShallow",
-    RAW = "__v_raw"
+    SKIP = '__v_skip',
+    IS_REACTIVE = '__v_isReactive',
+    IS_READONLY = '__v_isReadonly',
+    IS_SHALLOW = '__v_isShallow',
+    RAW = '__v_raw'
 }
 
 /**
  * Creates a readonly copy of the original object. Note the returned copy is not
  * made reactive, but `readonly` can be called on an already reactive object.
  */
-export declare function readonly<T extends object>(target: T): DeepReadonly<UnwrapNestedRefs<T>>;
+export declare function readonly<T extends object>(
+    target: T
+): DeepReadonly<UnwrapNestedRefs<T>>;
 
 export declare interface Ref<T = any> {
     value: T;
@@ -198,7 +254,9 @@ export declare interface Ref<T = any> {
     [RefSymbol]: true;
 }
 
-export declare function ref<T extends object>(value: T): [T] extends [Ref] ? T : Ref<UnwrapRef<T>>;
+export declare function ref<T extends object>(
+    value: T
+): [T] extends [Ref] ? T : Ref<UnwrapRef<T>>;
 
 export declare function ref<T>(value: T): Ref<UnwrapRef<T>>;
 
@@ -223,8 +281,7 @@ declare const RefSymbol: unique symbol;
  * augmentations in its generated d.ts, so we have to manually append them
  * to the final generated d.ts in our build process.
  */
-export declare interface RefUnwrapBailTypes {
-}
+export declare interface RefUnwrapBailTypes {}
 
 export declare function resetTracking(): void;
 
@@ -237,7 +294,9 @@ export declare type ShallowReactive<T> = T & {
  * level properties are reactive. It also does not auto-unwrap refs (even at the
  * root level).
  */
-export declare function shallowReactive<T extends object>(target: T): ShallowReactive<T>;
+export declare function shallowReactive<T extends object>(
+    target: T
+): ShallowReactive<T>;
 
 declare const ShallowReactiveMarker: unique symbol;
 
@@ -247,13 +306,17 @@ declare const ShallowReactiveMarker: unique symbol;
  * returned properties.
  * This is used for creating the props proxy object for stateful components.
  */
-export declare function shallowReadonly<T extends object>(target: T): Readonly<T>;
+export declare function shallowReadonly<T extends object>(
+    target: T
+): Readonly<T>;
 
 export declare type ShallowRef<T = any> = Ref<T> & {
     [ShallowRefMarker]?: true;
 };
 
-export declare function shallowRef<T extends object>(value: T): T extends Ref ? T : ShallowRef<T>;
+export declare function shallowRef<T extends object>(
+    value: T
+): T extends Ref ? T : ShallowRef<T>;
 
 export declare function shallowRef<T>(value: T): ShallowRef<T>;
 
@@ -262,19 +325,32 @@ export declare function shallowRef<T = any>(): ShallowRef<T | undefined>;
 declare const ShallowRefMarker: unique symbol;
 
 export declare type ShallowUnwrapRef<T> = {
-    [K in keyof T]: T[K] extends Ref<infer V> ? V : T[K] extends Ref<infer V> | undefined ? unknown extends V ? undefined : V | undefined : T[K];
+    [K in keyof T]: T[K] extends Ref<infer V>
+        ? V
+        : T[K] extends Ref<infer V> | undefined
+        ? unknown extends V
+            ? undefined
+            : V | undefined
+        : T[K];
 };
 
 declare function stop_2(runner: ReactiveEffectRunner): void;
-export { stop_2 as stop }
+export { stop_2 as stop };
 
 export declare function toRaw<T>(observed: T): T;
 
 export declare type ToRef<T> = IfAny<T, Ref<T>, [T] extends [Ref] ? T : Ref<T>>;
 
-export declare function toRef<T extends object, K extends keyof T>(object: T, key: K): ToRef<T[K]>;
+export declare function toRef<T extends object, K extends keyof T>(
+    object: T,
+    key: K
+): ToRef<T[K]>;
 
-export declare function toRef<T extends object, K extends keyof T>(object: T, key: K, defaultValue: T[K]): ToRef<Exclude<T[K], undefined>>;
+export declare function toRef<T extends object, K extends keyof T>(
+    object: T,
+    key: K,
+    defaultValue: T[K]
+): ToRef<Exclude<T[K], undefined>>;
 
 export declare type ToRefs<T = any> = {
     [K in keyof T]: ToRef<T[K]>;
@@ -282,7 +358,11 @@ export declare type ToRefs<T = any> = {
 
 export declare function toRefs<T extends object>(object: T): ToRefs<T>;
 
-export declare function track(target: object, type: TrackOpTypes, key: unknown): void;
+export declare function track(
+    target: object,
+    type: TrackOpTypes,
+    key: unknown
+): void;
 
 /**
  * wasTracked and newTracked maintain the status for several levels of effect
@@ -301,37 +381,62 @@ declare type TrackedMarkers = {
 };
 
 export declare const enum TrackOpTypes {
-    GET = "get",
-    HAS = "has",
-    ITERATE = "iterate"
+    GET = 'get',
+    HAS = 'has',
+    ITERATE = 'iterate'
 }
 
-export declare function trigger(target: object, type: TriggerOpTypes, key?: unknown, newValue?: unknown, oldValue?: unknown, oldTarget?: Map<unknown, unknown> | Set<unknown>): void;
+export declare function trigger(
+    target: object,
+    type: TriggerOpTypes,
+    key?: unknown,
+    newValue?: unknown,
+    oldValue?: unknown,
+    oldTarget?: Map<unknown, unknown> | Set<unknown>
+): void;
 
 export declare const enum TriggerOpTypes {
-    SET = "set",
-    ADD = "add",
-    DELETE = "delete",
-    CLEAR = "clear"
+    SET = 'set',
+    ADD = 'add',
+    DELETE = 'delete',
+    CLEAR = 'clear'
 }
 
 export declare function triggerRef(ref: Ref): void;
 
 export declare function unref<T>(ref: T | Ref<T>): T;
 
-export declare type UnwrapNestedRefs<T> = T extends Ref ? T : UnwrapRefSimple<T>;
+export declare type UnwrapNestedRefs<T> = T extends Ref
+    ? T
+    : UnwrapRefSimple<T>;
 
-export declare type UnwrapRef<T> = T extends ShallowRef<infer V> ? V : T extends Ref<infer V> ? UnwrapRefSimple<V> : UnwrapRefSimple<T>;
+export declare type UnwrapRef<T> = T extends ShallowRef<infer V>
+    ? V
+    : T extends Ref<infer V>
+    ? UnwrapRefSimple<V>
+    : UnwrapRefSimple<T>;
 
-declare type UnwrapRefSimple<T> = T extends Function | CollectionTypes | BaseTypes | Ref | RefUnwrapBailTypes[keyof RefUnwrapBailTypes] | {
-    [RawSymbol]?: true;
-} ? T : T extends Array<any> ? {
-    [K in keyof T]: UnwrapRefSimple<T[K]>;
-} : T extends object & {
-    [ShallowReactiveMarker]?: never;
-} ? {
-    [P in keyof T]: P extends symbol ? T[P] : UnwrapRef<T[P]>;
-} : T;
+declare type UnwrapRefSimple<T> = T extends
+    | Function
+    | CollectionTypes
+    | BaseTypes
+    | Ref
+    | RefUnwrapBailTypes[keyof RefUnwrapBailTypes]
+    | {
+          [RawSymbol]?: true;
+      }
+    ? T
+    : T extends Array<any>
+    ? {
+          [K in keyof T]: UnwrapRefSimple<T[K]>;
+      }
+    : T extends object & {
+          [ShallowReactiveMarker]?: never;
+      }
+    ? {
+          [P in keyof T]: P extends symbol ? T[P] : UnwrapRef<T[P]>;
+      }
+    : T;
 
 declare type WeakCollections = WeakMap<any, any> | WeakSet<any>;
 
@@ -344,4 +449,4 @@ export declare interface WritableComputedRef<T> extends Ref<T> {
     readonly effect: ReactiveEffect<T>;
 }
 
-export { }
+export {};
