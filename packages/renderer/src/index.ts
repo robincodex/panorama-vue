@@ -1,5 +1,5 @@
 import { App, Component, createRenderer } from '@vue/runtime-core';
-import { patchProp } from './patchProp';
+import { getEventName, patchProp } from './patchProp';
 
 const { render, createApp } = createRenderer<Panel, Panel>({
     patchProp,
@@ -18,12 +18,31 @@ const { render, createApp } = createRenderer<Panel, Panel>({
     createElement(type, _, __, vnodeProps) {
         if (vnodeProps) {
             const { id, ref, ref_key, ref_for, style, ...props } = vnodeProps;
+            const defaultEvents: Record<string, () => void> = {};
+
+            // 移除事件
+            for (const k in props) {
+                const event = getEventName(k);
+                if (event === '') {
+                    continue;
+                }
+                const handle = props[k];
+                if (typeof handle === 'function') {
+                    defaultEvents[event] = handle;
+                    delete props[k];
+                }
+            }
+
             const el = $.CreatePanelWithProperties(
                 type,
                 $.GetContextPanel(),
                 id || '',
                 props
             );
+
+            for (const event in defaultEvents) {
+                el.SetPanelEvent(event as PanelEvent, defaultEvents[event]);
+            }
             return el;
         } else {
             const el = $.CreatePanel(type, $.GetContextPanel(), '');

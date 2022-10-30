@@ -71,14 +71,20 @@ export function patchEvent(
     event: string,
     nextValue: Function | null
 ) {
-    if (event === 'onClick') {
-        event = 'onactivate';
-    } else {
-        event = event.toLowerCase();
-    }
+    event = getEventName(event);
     if (nextValue) {
         el.SetPanelEvent(event as PanelEvent, nextValue as () => void);
     } else {
         el.ClearPanelEvent(event as PanelEvent);
     }
+}
+
+export function getEventName(event: string): string {
+    if (!isOn(event)) {
+        return '';
+    }
+    if (event === 'onClick') {
+        event = 'onactivate';
+    }
+    return event.toLowerCase();
 }
