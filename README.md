@@ -1,18 +1,19 @@
 # Vue for Valve's Panorama UI
 
-抽空适配，不一定成，没准有更好的方案出现。
-
 Vue 项目编译范例: [panorama-vue-example](https://github.com/RobinCodeX/panorama-vue-example)
 
-# 改动记录
+目前已经适配完成，不过有些事项需要说明:
 
-2022/10/17
+### 不支持 Fragment
 
--   现在采用分包的形式，统一归纳到`@panorama-vue`
+根节点必须只能存在一个，如果不存在根节点就会被渲染成 Fragment，此时 vue 会创建两个空的文本节点，导致出现两个 Label，目前除非改 vue 的 core 代码，否则没法避免。
 
--   目前改造了`@vue/runtime-core`和`@vue/reactivity`两个官方库，因为 Vue 官方库存在很多`console`之类的 PUI 没有的 API，
-    现在只是适配一下，后面可能会根据 PUI 的情况魔改。
+例如
 
--   适配已经快完成，截图如下，不过这是我强行修改编译后的代码才成功的，SFC 的编译有点问题，还需研究。
-    ![](./.github/images/screenshot1.png)
--   适配完成了，范例已经可以在游戏内正常运行，不过重载时渲染有问题，后面可以着手渲染部分。
+```vue
+<template>
+    <Panel class="A"></Panel>
+    <Panel class="B"></Panel>
+    <Panel class="C"></Panel>
+</template>
+```
