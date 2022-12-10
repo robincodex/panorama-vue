@@ -1,4 +1,4 @@
-# Vue for Valve's Panorama UI
+# Vue for Valve's Panorama UI（已弃用，不再更新，推荐[solid-panorama](https://github.com/RobinCodeX/solid-panorama)）
 
 Vue 项目编译范例: [panorama-vue-example](https://github.com/RobinCodeX/panorama-vue-example)
 
